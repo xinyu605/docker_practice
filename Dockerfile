@@ -1,14 +1,13 @@
-# Create Image based on node
-FROM node
+FROM node:14
 
 # Working Directory: Tell Docker all subsequent commands should be executed inside of the folder (default: root folder)
 WORKDIR /app
 
-COPY package.json /app
+COPY package.json .
 
 RUN npm install
 
-COPY . /app
+COPY . .
 
 # Tell Docker to expose the certain port to local system when this Container is started
 # Because something is listening in Image, it has own network isolated from surrounding environment
