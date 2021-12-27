@@ -13,6 +13,8 @@ COPY . .
 # Because something is listening in Image, it has own network isolated from surrounding environment
 EXPOSE 80
 
-# `node server.js` should be executed when Container instead of Image is created, so RUN cannot be used here
-# CMD means command, it will not be executed when the Image is created, format: ["command", "fileName"]
-CMD ["node", "server.js"]
+# create anonymous volumes named "temp"
+# the data kept in this volume would be lost as Container removed
+VOLUME [ "/temp" ]
+
+CMD ["npm", "start"]
