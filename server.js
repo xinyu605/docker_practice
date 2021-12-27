@@ -27,6 +27,7 @@ app.post('/create', async (req, res) => {
   const content = req.body.text;
 
   const adjTitle = title.toLowerCase();
+  console.log('test')
 
   const tempFilePath = path.join(__dirname, 'temp', adjTitle + '.txt');
   const finalFilePath = path.join(__dirname, 'feedback', adjTitle + '.txt');
@@ -36,7 +37,8 @@ app.post('/create', async (req, res) => {
     if (exists) {
       res.redirect('/exists');
     } else {
-      await fs.rename(tempFilePath, finalFilePath);
+      await fs.copyFile(tempFilePath, finalFilePath);
+      await fs.unlink(tempFilePath)
       res.redirect('/');
     }
   });
