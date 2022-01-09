@@ -9,12 +9,15 @@ RUN npm install
 
 COPY . .
 
+ENV PORT 80
+
 # Tell Docker to expose the certain port to local system when this Container is started
 # Because something is listening in Image, it has own network isolated from surrounding environment
-EXPOSE 80
+# dollar sign means variable, Docker will find it automatically
+EXPOSE $PORT
 
 # create anonymous volumes named "temp"
 # the data kept in this volume would be lost as Container removed
-VOLUME [ "/temp" ]
+# VOLUME [ "/temp" ]
 
 CMD ["npm", "start"]
