@@ -30,5 +30,16 @@ services:
       dockerfile: composer.dockerfile
     volumes:
       - ./src:/var/www/html  # bind mount
-  # artison:
-  # npm:
+  artisan:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+    volumes:
+      - ./src:/var/www/html  # bind mount
+    entrypoint: ["php", "/var/www/html/artisan"]
+  npm:
+    image: node:14
+    working_dir: /var/www/html  # equals to be written in Dockerfile
+    entrypoint: ["npm"]
+    volumes:
+      - ./src:/var/www/html
