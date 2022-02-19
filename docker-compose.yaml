@@ -2,7 +2,10 @@ version: "3.8"
 
 services:
   server: # function: It should have a look at incoming requests and funnel them to PHP container
-    image: 'nginx:stable-alpine' # ref: https://hub.docker.com/_/nginx
+    # image: 'nginx:stable-alpine' # ref: https://hub.docker.com/_/nginx
+    build:
+      context: .
+      dockerfile: dockerfiles/nginx.dockerfile
     ports:
       - '8000:80'
     volumes:
@@ -13,8 +16,8 @@ services:
       - mysql
   php:
     build:
-      context: ./dockerfiles
-      dockerfile: php.dockerfile
+      context: .
+      dockerfile: dockerfiles/php.dockerfile
     volumes:
       - ./src:/var/www/html:delegated 
       # delegated: 
@@ -32,8 +35,8 @@ services:
       - ./src:/var/www/html  # bind mount
   artisan:
     build:
-      context: ./dockerfiles
-      dockerfile: php.dockerfile
+      context: .
+      dockerfile: dockerfiles/php.dockerfile
     volumes:
       - ./src:/var/www/html  # bind mount
     entrypoint: ["php", "/var/www/html/artisan"]
