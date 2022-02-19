@@ -1,0 +1,18 @@
+version: "3.8" # ref: https://docs.docker.com/compose/compose-file/
+services: # meaning equals 'container'
+  mongodb:
+    image: 'mongo' # image name (could be our own image name or path, from dockerHub, or url)
+    volumes:
+      - data:/data/db # named volume
+    # environment: (it could be replace with env_file)
+    #   MONGO_INITDB_ROOT_USERNAME: max
+    #   MONGO_INITDB_ROOT_USERNAME=max (':' or '=' are valid)
+    #   MONGO_INITDB_ROOT_PASSWORD: secret
+    env_file:
+      - ./env/mongo.env
+  # backend:
+
+  # frontend:
+
+volumes:
+  data:  # anonymous volume & bind mounts doesn't need to be listed here
