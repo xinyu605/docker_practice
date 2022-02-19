@@ -10,9 +10,25 @@ services: # meaning equals 'container'
     #   MONGO_INITDB_ROOT_PASSWORD: secret
     env_file:
       - ./env/mongo.env
-  # backend:
-
+  backend:
+    build: ./backend
+    # build:
+    #   context: ./backend # path of Dockerfile
+    #   dockerfile: Dockerfile # name of Dockerfile, ex. Dockerfile-dev, etc.
+    #   args:
+    #     name: server  # ARG in Dockerfile, ex. ARG name
+    ports:
+      - '80:80'
+    volumes:
+      - logs:/app/logs     # named volume
+      - ./backend:/app     # bind mounts
+      - /app/node_modules  # anonymous volume
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb  # meaning: run container mongodb first, then run backend
   # frontend:
 
 volumes:
   data:  # anonymous volume & bind mounts doesn't need to be listed here
+  logs:
