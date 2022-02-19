@@ -7,7 +7,16 @@ services:
       - '8000:80'
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro  # bind mount single file
-  # php:
+  php:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+    volumes:
+      - ./src:/var/www/html:delegated 
+      # delegated: 
+      # If container should write some data there, 
+      # it's not instantly reflected back to the host machine
+
   # mysql:
   # composer:
   # artison:
