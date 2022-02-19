@@ -27,8 +27,16 @@ services: # meaning equals 'container'
       - ./env/backend.env
     depends_on:
       - mongodb  # meaning: run container mongodb first, then run backend
-  # frontend:
-
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend/src:/app/src  # bind mount
+    stdin_open: true  # meaning: docker run container -i (interactive)
+    tty: true         # meaning: docker run container -t (attach to the terminal)
+    depends_on:
+      - backend
 volumes:
   data:  # anonymous volume & bind mounts doesn't need to be listed here
   logs:
