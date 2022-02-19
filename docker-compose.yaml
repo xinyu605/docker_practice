@@ -20,6 +20,11 @@ services:
     image: mysql:5.7 # ref: https://hub.docker.com/_/mysql
     env_file:
       - ./env/mysql.env
-  # composer:
+  composer:  # function: install and set up a Laravel project
+    build:
+      context: ./dockerfiles
+      dockerfile: composer.dockerfile
+    volumes:
+      - ./src:/var/www/html  # bind mount
   # artison:
   # npm:
